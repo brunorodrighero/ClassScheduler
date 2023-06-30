@@ -1,52 +1,68 @@
-﻿@model List<Professor>
+﻿@using Humanizer.Localisation;
+@model List<Professor>
 @{
-    ViewData["Title"] = "Listagem de Professores";
+    ViewData["Title"] = Resource.ProfessorListing;
 }
 
 <div class="container-fluid text-center">
     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-        <a class="btn btn-primary" asp-controller="Professor" asp-action="Criar">Adicionar Novo Professor</a>
+        <a class="btn btn-primary" asp-controller="Professor" asp-action="Create">@Resource.AddNewProfessor</a>
     </div>
     <br />
     <br />
-    <h1>Listagem de Professores</h1>
+    <h1>@Resource.ProfessorListing</h1>
 
-    <table id="table-usuarios" class="table display">
+    <table id="table-professor" class="table display">
         <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Sobrenome</th>
-                <th scope="col">Titulação</th>
-                <th scope="col">Email</th>
-                <th scope="col">Telefone</th>
-                <th scope="col">Data de Cadastro</th>
+                <th scope="col">@Resource.ID</th>
+                <th scope="col">@Resource.Name</th>
+                <th scope="col">@Resource.LastName</th>
+                <th scope="col">@Resource.Qualification</th>
+                <th scope="col">@Resource.Email</th>
+                <th scope="col">@Resource.Phone</th>
+                <th scope="col">@Resource.RegistrationDate</th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
 
-            @if (Model != null)
+            @try
             {
-                foreach (Professor professor in Model)
+                if (Model != null)
+                {
+                    foreach (Professor professor in Model)
+                    {
+                        <tr>
+                            <th scope="row">@professor.Id</th>
+                            <td>@professor.Nome</td>
+                            <td>@professor.Sobrenome</td>
+                            <td>@professor.Titulacao</td>
+                            <td>@professor.Email</td>
+                            <td>@professor.Telefone</td>
+                            <td>@professor.DataCadastro</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a role="button" class="btn btn-primary" asp-route-id="@professor.Id" asp-controller="Professor" asp-action="Edit">@Resource.Edit</a>
+                                    <a role="button" class="btn btn-danger" asp-route-id="@professor.Id" asp-controller="Professor" asp-action="Delete">@Resource.Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+
+                    }
+                }
+                else
                 {
                     <tr>
-                        <th scope="row">@professor.Id</th>
-                        <td>@professor.Nome</td>
-                        <td>@professor.Sobrenome</td>
-                        <td>@professor.Titulacao</td>
-                        <td>@professor.Email</td>
-                        <td>@professor.Telefone</td>
-                        <td>@professor.DataCadastro</td>
-                        <td>
-                            <div class="btn-group" role="group">
-                                <a role="button" class="btn btn-primary" asp-route-id="@professor.Id" asp-controller="Professor" asp-action="Editar">Editar</a>
-                                <a role="button" class="btn btn-danger" asp-route-id="@professor.Id" asp-controller="Professor" asp-action="Apagar">Apagar</a>
-                            </div>
-                        </td>
+                        <td colspan="8">@Resource.NoProfessorsFound</td>
                     </tr>
-
                 }
+            }
+            catch (Exception e)
+            {
+                <tr>
+                    <td colspan="8">@Resource.ErrorMessage: @e.Message</td>
+                </tr>
             }
 
         </tbody>

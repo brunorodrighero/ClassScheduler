@@ -1,6 +1,5 @@
 ﻿using ClassScheduler.Data;
 using ClassScheduler.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClassScheduler.Controllers
@@ -15,12 +14,12 @@ namespace ClassScheduler.Controllers
         }
         public IActionResult Index() => View();
 
-        [Authorize]
+        //[Authorize]
         public IActionResult Criar() => View(new Professor());
 
+        //[Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
         public async Task<IActionResult> Criar([Bind("Id,Nome,Sobrenome,Titulacao,Email,Telefone,DataCadastro")] Professor professor)
         {
             if (ModelState.IsValid)
