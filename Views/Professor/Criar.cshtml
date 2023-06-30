@@ -1,1 +1,49 @@
-﻿
+﻿@model Professor
+@{
+    ViewData["Title"] = "Adicionar Professor";
+}
+<div class="container-fluid text-center">
+
+    <h1>Adicionar Professor</h1>
+
+</div>
+
+<form asp-controller="Professor" asp-action="Criar" method="post">
+    <div class="form-group mb-3">
+        <label for="Nome" class="form-label">Nome</label>
+        <input type="text" asp-for="Nome" id="Nome" class="form-control" placeholder="Informe o nome do professor">
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="Sobrenome" class="form-label">Sobrenome</label>
+        <input type="text" asp-for="Sobrenome" id="Sobrenome" class="form-control" placeholder="Informe o Sobrenome do professor">
+        <span asp-validation-for="Sobrenome" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="Titulacao" class="form-label">Titulação</label>
+        <input type="text" asp-for="Titulacao" id="Titulacao" class="form-control" placeholder="Informe a Titulação do professor">
+        <span asp-validation-for="Titulacao" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="Email" class="form-label">E-mail</label>
+        <input type="email" asp-for="Email" id="Email" class="form-control" placeholder="Informe o E-mail do professor">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="Telefone" class="form-label">Telefone</label>
+        <input type="text" asp-for="Telefone" id="Telefone" class="form-control" placeholder="Informe Telefone do professor">
+        <span asp-validation-for="Telefone" class="text-danger"></span>
+    </div>    
+
+    <button type="submit" class="btn btn-primary w-100 mb-2">Adicionar</button>
+    <a class="btn btn-secondary w-100" role="button" asp-controller="Professor" asp-action="Index">Voltar</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}
+
+

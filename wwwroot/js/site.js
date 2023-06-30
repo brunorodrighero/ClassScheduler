@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    getDataTable("#table-professor");
+    getDataTable("#table-professores");
 });
 
 function getDataTable(id) {
@@ -40,4 +40,8 @@ $(".close-alert").click(function () {
 
 $(document).ready(function () {
     $('#Celular').mask('(00)00000-0000');
+});
+
+$(document).ready(function () {
+    $('#Telefone').mask('(00)0000-0000');
 });

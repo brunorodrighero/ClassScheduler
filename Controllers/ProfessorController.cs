@@ -20,10 +20,11 @@ namespace ClassScheduler.Controllers
         //[Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Criar([Bind("Id,Nome,Sobrenome,Titulacao,Email,Telefone,DataCadastro")] Professor professor)
+        public async Task<IActionResult> Criar([Bind("Id,Nome,Sobrenome,Titulacao,Email,Telefone")] Professor professor)
         {
             if (ModelState.IsValid)
             {
+                professor.DataCadastro = DateTime.Now;
                 _context.Add(professor);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
