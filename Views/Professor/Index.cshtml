@@ -25,11 +25,8 @@
                 <th scope="col"></th>
             </tr>
         </thead>
-        <tbody>
-
-            @try
-            {
-                if (Model != null)
+        <tbody>            
+                @if (Model != null)
                 {
                     foreach (Professor professor in Model)
                     {
@@ -50,21 +47,8 @@
                         </tr>
 
                     }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="8">@Resource.NoProfessorsFound</td>
-                    </tr>
-                }
-            }
-            catch (Exception e)
-            {
-                <tr>
-                    <td colspan="8">@Resource.ErrorMessage: @e.Message</td>
-                </tr>
-            }
-
+                }                
+            }            
         </tbody>
     </table>
 </div>
