@@ -21,7 +21,7 @@ Ensure the following prerequisites are met before you proceed:
 
 #### Installation
 
-1. Clone the repository ```bash git clone https://github.com/brunorodrighero/ClassScheduler
+1. Clone the repository ```bash git clone``` https://github.com/brunorodrighero/ClassScheduler
 2. Open the ClassScheduler.sln solution in Visual Studio.
 3. Press F5 or click on Start Debugging to start the application.
 
@@ -31,7 +31,7 @@ We welcome all contributions. Please read CONTRIBUTING.md for details on our cod
 
 ## Authors
 
-Bruno Luiz Silva Rodighiero
+Bruno Luiz Silva Rodighiero @brunorodrighero
 
 ## License
 
@@ -66,7 +66,7 @@ Antes de começar, certifique-se de ter instalado:
 
 #### Instalação
 
-1. Clone o repositório ```bash git clone https://github.com/brunorodrighero/ClassScheduler
+1. Clone o repositório ```bash git clone``` https://github.com/brunorodrighero/ClassScheduler
 2. Abra a solução AgendadorDeAulas.sln no Visual Studio.
 3. Pressione F5 ou clique em Iniciar Depuração para iniciar o aplicativo.
 
@@ -76,7 +76,7 @@ Agradecemos muito qualquer contribuição. Por favor, consulte nosso [CONTRIBUTING
 
 ## Autores
 
-Bruno Luiz Silva Rodighiero
+Bruno Luiz Silva Rodighiero @brunorodrighero
 
 ## Licença
 
