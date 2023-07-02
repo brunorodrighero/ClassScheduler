@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     getDataTable("#table-professores");
+    getDataTable("#table-cursos");
 });
 
 function getDataTable(id) {

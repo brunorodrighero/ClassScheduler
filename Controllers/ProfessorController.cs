@@ -50,8 +50,6 @@ namespace ClassScheduler.Controllers
                 TempData["MensagemErro"] = $"Ops, não conseguimos cadastrar o professor. Tente novamente. Detalhe do erro: {erro.Message}.";
                 return RedirectToAction("Index");
             }
-
-            return View(professor);
         }
 
         public async Task<IActionResult> Editar(int id)

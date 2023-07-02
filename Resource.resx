@@ -117,11 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNewCourse" xml:space="preserve">
+    <value>Adicionar Novo Curso</value>
+  </data>
   <data name="AddNewProfessor" xml:space="preserve">
     <value>Adicionar Novo Professor</value>
   </data>
+  <data name="CoursesListing" xml:space="preserve">
+    <value>Listagem de Cursos</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Apagar</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Descrição</value>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Duração</value>
+    <comment>Semestres ou anos.</comment>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Editar</value>

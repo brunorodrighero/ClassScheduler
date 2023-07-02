@@ -61,6 +61,15 @@ namespace ClassScheduler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adicionar Novo Curso.
+        /// </summary>
+        public static string AddNewCourse {
+            get {
+                return ResourceManager.GetString("AddNewCourse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adicionar Novo Professor.
         /// </summary>
         public static string AddNewProfessor {
@@ -70,11 +79,38 @@ namespace ClassScheduler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Listagem de Cursos.
+        /// </summary>
+        public static string CoursesListing {
+            get {
+                return ResourceManager.GetString("CoursesListing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apagar.
         /// </summary>
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descrição.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duração.
+        /// </summary>
+        public static string Duration {
+            get {
+                return ResourceManager.GetString("Duration", resourceCulture);
             }
         }
         
