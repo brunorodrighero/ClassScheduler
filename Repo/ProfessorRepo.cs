@@ -18,14 +18,33 @@ namespace ClassScheduler.Repo
             return professor;
         }
 
-        public Task<bool> ApagarAsync(int id)
+        public async Task<bool> ApagarAsync(int id)
         {
-            throw new NotImplementedException();
+            Professor professorDB = await ListarPorIdAsync(id);
+
+            if (professorDB == null) throw new Exception("Houve um erro na deleção do(a) professor(a).");
+            _context.Professores.Remove(professorDB);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<Professor> AtualizarAsync(Professor professor)
+        public async Task<Professor> EditarAsync(Professor professor)
         {
-            throw new NotImplementedException();
+            Professor professorDB = await ListarPorIdAsync(professor.Id);
+
+            if (professorDB == null) throw new Exception("Houve um erro ao editar os dados do(a) professor(a).");
+
+            professorDB.Nome = professor.Nome;
+            professorDB.Sobrenome = professor.Sobrenome;
+            professorDB.Telefone = professor.Telefone;
+            professorDB.Email = professor.Email;
+            professorDB.Titulacao = professor.Titulacao;
+            professorDB.DataAtualizacao = DateTime.Now;
+
+            _context.Professores.Update(professorDB);
+            await _context.SaveChangesAsync();
+
+            return professorDB;
         }
 
         public async Task<List<Professor>> BuscarTodosAsync()
@@ -33,9 +52,9 @@ namespace ClassScheduler.Repo
             return await _context.Professores.ToListAsync();
         }
 
-        public Task<Professor> ListarPorIdAsync(int id)
+        public async Task<Professor> ListarPorIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Professores.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

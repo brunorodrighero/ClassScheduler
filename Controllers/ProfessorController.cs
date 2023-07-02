@@ -24,6 +24,40 @@ namespace ClassScheduler.Controllers
         //[Authorize]
         public IActionResult Criar() => View(new Professor());
 
+        public async Task<IActionResult> Editar(int id)
+        {
+            Professor professor = await _professorRepo.ListarPorIdAsync(id);
+            return professor == null ? NotFound() : View(professor);
+        }
+
+        public async Task<IActionResult> Apagar(int id)
+        {
+            Professor professor = await _professorRepo.ListarPorIdAsync(id);
+            return professor == null ? NotFound() : View(professor);
+        }
+
+        public async Task<IActionResult> ApagarProfessor(int id)
+        {
+            try
+            {
+                bool apagado = await _professorRepo.ApagarAsync(id);
+                if (apagado)
+                {
+                    TempData["MensagemSucesso"] = "Professor deletado com sucesso";
+                }
+                else
+                {
+                    TempData["MensagemErro"] = "Ops, não conseguimos deletar o Professor. Tente novamente.";
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não conseguimos deletar o Professor. Tente novamente. Detalhe do erro: {erro.Message}.";
+                return RedirectToAction("Index");
+            }
+        }
+
         //[Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -31,7 +65,7 @@ namespace ClassScheduler.Controllers
         {
             try
             {
-                if (!ModelState["Nome"].Errors.Any() && !ModelState["Sobrenome"].Errors.Any() && !ModelState["Email"].Errors.Any() && !ModelState["Telefone"].Errors.Any())
+                if (!ModelState["Nome"].Errors.Any() && !ModelState["Sobrenome"].Errors.Any() && !ModelState["Email"].Errors.Any() && !ModelState["Telefone"].Errors.Any() && !ModelState["Titulacao"].Errors.Any())
                 {
                     professor.DataCadastro = DateTime.Now;
                     await _professorRepo.AdicionarAsync(professor);
@@ -46,24 +80,34 @@ namespace ClassScheduler.Controllers
             }
             catch (Exception erro)
             {
-
-                TempData["MensagemErro"] = $"Ops, não conseguimos cadastrar o professor. Tente novamente. Detalhe do erro: {erro.Message}.";
+                TempData["MensagemErro"] = $"Ops, não conseguimos cadastrar o(a) professor(a). Tente novamente. Detalhe do erro: {erro.Message}.";
                 return RedirectToAction("Index");
             }
         }
 
-        public async Task<IActionResult> Editar(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarProfessor(Professor professor)
         {
-            //alterar
-            string professor = "";
-            return professor == null ? NotFound() : View(professor);
-        }
-
-        public async Task<IActionResult> Apagar(int id)
-        {
-            //alterar
-            string professor = "";
-            return professor == null ? NotFound() : View(professor);
+            try
+            {
+                if (!ModelState["Nome"].Errors.Any() && !ModelState["Sobrenome"].Errors.Any() && !ModelState["Email"].Errors.Any() && !ModelState["Telefone"].Errors.Any() && !ModelState["Titulacao"].Errors.Any())
+                {
+                    await _professorRepo.EditarAsync(professor);
+                    TempData["MensagemSucesso"] = "Professor(a) alterado(a) com sucesso";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["MensagemErro"] = $"Ops, dados digitados incorretamente.";
+                    return View(professor);
+                }
+            }
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não conseguimos cadastrar o(a) professor(a). Tente novamente. Detalhe do erro: {erro.Message}.";
+                return RedirectToAction("Index");
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ namespace ClassScheduler.Repo
         Task<Curso> ListarPorIdAsync(int id);
         Task<List<Curso>> BuscarTodosAsync();
         Task<Curso> AdicionarAsync(Curso curso);
-        Task<Curso> AtualizarAsync(Curso curso);
+        Task<Curso> EditarAsync(Curso curso);
         Task<bool> ApagarAsync(int id);
     }
 }

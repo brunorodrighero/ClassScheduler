@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ClassScheduler.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace ClassScheduler.Models
 {
@@ -11,12 +12,12 @@ namespace ClassScheduler.Models
         [Required(ErrorMessage = "O campo Nome é obrigatório.")]
         public string Nome { get; set; }
 
-        [Required(ErrorMessage = "O campo Sobrenome é obrigatório.")]
         [StringLength(100)]
+        [Required(ErrorMessage = "O campo Sobrenome é obrigatório.")]
         public string Sobrenome { get; set; }
 
-        [StringLength(100)]
-        public string Titulacao { get; set; }
+        [Required(ErrorMessage = "O campo Titulação é obrigatório.")]
+        public TitulacaoEnum Titulacao { get; set; }
 
         [Required(ErrorMessage = "O campo E-mail é obrigatório.")]
         [RegularExpression(@"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", ErrorMessage = "O formato do E-mail não é válido.")]
@@ -27,12 +28,12 @@ namespace ClassScheduler.Models
         [Phone(ErrorMessage = "O telefone não é válido.")]
         public string Telefone { get; set; }
 
-        public DateTime DataCadastro { get; set; }
+        public DateTime? DataCadastro { get; set; }
 
         public DateTime? DataAtualizacao { get; set; }
 
-        public List<Disponibilidade> Disponibilidades { get; set; }
+        public List<Disponibilidade>? Disponibilidades { get; set; }
 
-        public List<Aula> Aulas { get; set; }
+        public List<Aula>? Aulas { get; set; }
     }
 }

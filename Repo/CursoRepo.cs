@@ -23,7 +23,7 @@ namespace ClassScheduler.Repo
             throw new NotImplementedException();
         }
 
-        public Task<Curso> AtualizarAsync(Curso curso)
+        public Task<Curso> EditarAsync(Curso curso)
         {
             throw new NotImplementedException();
         }

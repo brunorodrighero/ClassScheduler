@@ -1,15 +1,17 @@
 ﻿@using ClassScheduler.Enums;
 @model Professor
 @{
-    ViewData["Title"] = "Adicionar Professor";
+    TempData["Title"] = "Editar Professor";
 }
+
 <div class="container-fluid text-center">
 
-    <h1>Adicionar Professor</h1>
+    <h1>Editar Professor</h1>
 
 </div>
 
-<form asp-controller="Professor" asp-action="Criar" method="post">
+<form asp-controller="Professor" asp-action="EditarProfessor" method="post">
+    <input type="hidden" asp-for="Id" />
     <div class="form-group mb-3">
         <label for="Nome" class="form-label">Nome</label>
         <input type="text" asp-for="Nome" id="Nome" class="form-control" placeholder="Informe o nome do professor">
@@ -42,9 +44,9 @@
         <label for="Telefone" class="form-label">Telefone</label>
         <input type="text" asp-for="Telefone" id="Telefone" class="form-control" placeholder="Informe Telefone do professor">
         <span asp-validation-for="Telefone" class="text-danger"></span>
-    </div>    
+    </div>
 
-    <button type="submit" class="btn btn-primary w-100 mb-2">Adicionar</button>
+    <button type="submit" class="btn btn-primary w-100 mb-2">Editar</button>
     <a class="btn btn-secondary w-100" role="button" asp-controller="Professor" asp-action="Index">Voltar</a>
 </form>
 
@@ -54,5 +56,4 @@
     }
 
 }
-
 

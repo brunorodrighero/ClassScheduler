@@ -1,6 +1,14 @@
 ﻿$(document).ready(function () {
     getDataTable("#table-professores");
     getDataTable("#table-cursos");
+
+
+    $(".close-alert").click(function () {
+        $(".alert").hide();
+    });
+
+    $('#Celular').mask('(00)00000-0000');
+    $('#Telefone').mask('(00)0000-0000');
 });
 
 function getDataTable(id) {
@@ -34,15 +42,3 @@ function getDataTable(id) {
     }
     );
 }
-
-$(".close-alert").click(function () {
-    $(".alert").hide();
-})
-
-$(document).ready(function () {
-    $('#Celular').mask('(00)00000-0000');
-});
-
-$(document).ready(function () {
-    $('#Telefone').mask('(00)0000-0000');
-});

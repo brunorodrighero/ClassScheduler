@@ -16,3 +16,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.alert-container {
+    margin-bottom: 20px;
+}
+
+.d-grid {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
