@@ -5,7 +5,9 @@
     ViewData["Title"] = Resource.CoursesListing;
 }
 
-<div class="alert-container">
+<partial name="_Notification" />
+
+@*<div class="alert-container">
     @if (TempData["MensagemSucesso"] != null)
     {
         <div class="alert alert-success" role="alert">
@@ -20,7 +22,7 @@
             @TempData["MensagemErro"]
         </div>
     }
-</div>
+</div>*@
 
 <div class="container-fluid text-center">
     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
