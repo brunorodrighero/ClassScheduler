@@ -32,13 +32,20 @@
     }
 </div>*@
 
-<div class="container-fluid text-center">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-        <a class="btn btn-primary" asp-controller="Professor" asp-action="Criar">@Resource.AddNewProfessor</a>
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">@Resource.ProfessorListing</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a class="btn btn-primary" asp-controller="Professor" asp-action="Criar">
+                <i class="bi bi-plus-circle"></i> &nbsp; @Resource.AddNewProfessor
+            </a>
+        </div>    
     </div>
+</div>
 
-    <h1>@Resource.ProfessorListing</h1>
-
+<div class="container-fluid text-center"> 
     <table id="table-professores" class="table display">
         <thead>
             <tr>
