@@ -1,0 +1,39 @@
+﻿@model Curso
+@{
+    TempData["Title"] = "Editar Curso";
+}
+
+<div class="container-fluid text-center">
+
+    <h1>Editar Curso</h1>
+
+</div>
+
+<form asp-controller="Curso" asp-action="EditarCurso" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group mb-3">
+        <label for="Nome" class="form-label">Nome</label>
+        <input type="text" asp-for="Nome" id="Nome" class="form-control" placeholder="Informe o nome do curso">
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="Duracao" class="form-label">Duração</label>
+        <input type="number" asp-for="Duracao" id="Duracao" class="form-control" placeholder="Informe a duração do curso em semestres.">
+        <span asp-validation-for="Duracao" class="text-danger"></span>
+    </div>    
+    <div class="form-group mb-3">
+        <label for="Descricao" class="form-label">Descrição</label>
+        <input type="text" asp-for="Descricao" id="Descricao" class="form-control" placeholder="Informe a descrição do curso.">
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100 mb-2">Editar</button>
+    <a class="btn btn-secondary w-100" role="button" asp-controller="Curso" asp-action="Index">Voltar</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}
+

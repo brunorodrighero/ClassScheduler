@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassScheduler", "ClassScheduler.csproj", "{1905D0B3-6C02-43C3-A5B6-FCF3196CC57F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassScheduler", "ClassScheduler.csproj", "{1905D0B3-6C02-43C3-A5B6-FCF3196CC57F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassScheduler.DataAccess", "..\ClassScheduler.DataAccess\ClassScheduler.DataAccess.csproj", "{8FBD9AC2-D947-4509-9774-121170DFFFAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassScheduler.Models", "..\ClassScheduler.Models\ClassScheduler.Models.csproj", "{9CCFE8B2-2DDA-4DCD-9E6B-FB746BB750CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassScheduler.Utility", "..\ClassScheduler.Utility\ClassScheduler.Utility.csproj", "{B0889E80-9EE2-4C90-8660-FD40C21F18F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{1905D0B3-6C02-43C3-A5B6-FCF3196CC57F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1905D0B3-6C02-43C3-A5B6-FCF3196CC57F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1905D0B3-6C02-43C3-A5B6-FCF3196CC57F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FBD9AC2-D947-4509-9774-121170DFFFAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FBD9AC2-D947-4509-9774-121170DFFFAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FBD9AC2-D947-4509-9774-121170DFFFAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FBD9AC2-D947-4509-9774-121170DFFFAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CCFE8B2-2DDA-4DCD-9E6B-FB746BB750CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CCFE8B2-2DDA-4DCD-9E6B-FB746BB750CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CCFE8B2-2DDA-4DCD-9E6B-FB746BB750CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CCFE8B2-2DDA-4DCD-9E6B-FB746BB750CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0889E80-9EE2-4C90-8660-FD40C21F18F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0889E80-9EE2-4C90-8660-FD40C21F18F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0889E80-9EE2-4C90-8660-FD40C21F18F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0889E80-9EE2-4C90-8660-FD40C21F18F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

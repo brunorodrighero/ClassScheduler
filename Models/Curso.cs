@@ -14,9 +14,9 @@ namespace ClassScheduler.Models
         [Required]
         public int Duracao { get; set; } // em semestres ou anos
 
-        public string Descricao { get; set; }
+        public string? Descricao { get; set; }
 
-        public List<Disciplina> Disciplinas { get; set; }
+        public List<Disciplina>? Disciplinas { get; set; }
 
         public DateTime DataCadastro { get; set; }
 

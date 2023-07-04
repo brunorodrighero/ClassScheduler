@@ -18,14 +18,31 @@ namespace ClassScheduler.Repo
             return curso;
         }
 
-        public Task<bool> ApagarAsync(int id)
+        public async Task<bool> ApagarAsync(int id)
         {
-            throw new NotImplementedException();
+            Curso cursoDB = await ListarPorIdAsync(id);
+
+            if (cursoDB == null) throw new Exception("Houve um erro na deleção do Curso.");
+            _context.Cursos.Remove(cursoDB);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<Curso> EditarAsync(Curso curso)
+        public async Task<Curso> EditarAsync(Curso curso)
         {
-            throw new NotImplementedException();
+            Curso cursoDB = await ListarPorIdAsync(curso.Id);
+
+            if (cursoDB == null) throw new Exception("Houve um erro ao editar os dados do Curso.");
+
+            cursoDB.Nome = curso.Nome;
+            cursoDB.Duracao = curso.Duracao;
+            cursoDB.Descricao = curso.Descricao;
+            cursoDB.DataAtualizacao = DateTime.Now;
+
+            _context.Cursos.Update(cursoDB);
+            await _context.SaveChangesAsync();
+
+            return cursoDB;
         }
 
         public async Task<List<Curso>> BuscarTodosAsync()
@@ -33,9 +50,9 @@ namespace ClassScheduler.Repo
             return await _context.Cursos.ToListAsync();
         }
 
-        public Task<Curso> ListarPorIdAsync(int id)
+        public async Task<Curso> ListarPorIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Cursos.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }
