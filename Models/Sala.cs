@@ -12,6 +12,7 @@ namespace ClassScheduler.Models
         public string Numero { get; set; }
 
         [Required]
+        [Range(1, 60)]
         public int Capacidade { get; set; }
 
         [StringLength(500)]
@@ -21,4 +22,5 @@ namespace ClassScheduler.Models
 
         public List<Disponibilidade> Disponibilidades { get; set; }
     }
+
 }
