@@ -175,6 +175,9 @@
   <data name="Qualification" xml:space="preserve">
     <value>Titulação</value>
   </data>
+  <data name="QuantAulasPorSemana" xml:space="preserve">
+    <value>Quantidade de Aulas por Semana</value>
+  </data>
   <data name="RegistrationDate" xml:space="preserve">
     <value>Data de Cadastro</value>
   </data>

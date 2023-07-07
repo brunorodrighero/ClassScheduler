@@ -25,6 +25,7 @@
                 <th scope="col">@Resource.ID</th>
                 <th scope="col">@Resource.Name</th>
                 <th scope="col">@Resource.CargaHoraria</th>
+                <th scope="col">@Resource.QuantAulasPorSemana</th>
                 <th scope="col">@Resource.Creditos</th>
                 <th scope="col">@Resource.Description</th>
                 <th scope="col">@Resource.NomeCurso</th>
@@ -40,13 +41,14 @@
                         <th scope="row">@disciplina.Id</th>
                         <td>@disciplina.Nome</td>
                         <td>@disciplina.CargaHoraria</td>
+                        <td>@disciplina.QuantAulasPorSemana</td>
                         <td>@disciplina.Creditos</td>
                         <td>@disciplina.Descricao</td>
                         <td>@(disciplina.Curso?.Nome ?? "N/A")</td>
                         <td>
                             <div class="btn-group" role="group">
-                                <a role="button" class="btn btn-primary" asp-route-id="@disciplina.Id" asp-controller="Curso" asp-action="Editar"><i class="bi bi-pencil-square"></i> @Resource.Edit</a>
-                                <a role="button" class="btn btn-danger" asp-route-id="@disciplina.Id" asp-controller="Curso" asp-action="Apagar"><i class="bi bi-x-square"></i> @Resource.Delete</a>
+                                <a role="button" class="btn btn-primary" asp-route-id="@disciplina.Id" asp-controller="Disciplina" asp-action="Editar"><i class="bi bi-pencil-square"></i> @Resource.Edit</a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@disciplina.Id" asp-controller="Disciplina" asp-action="Apagar"><i class="bi bi-x-square"></i> @Resource.Delete</a>
                             </div>
                         </td>
                     </tr>

@@ -232,6 +232,15 @@ namespace ClassScheduler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantidade de Aulas por Semana.
+        /// </summary>
+        public static string QuantAulasPorSemana {
+            get {
+                return ResourceManager.GetString("QuantAulasPorSemana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Data de Cadastro.
         /// </summary>
         public static string RegistrationDate {

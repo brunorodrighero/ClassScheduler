@@ -28,13 +28,52 @@ namespace ClassScheduler.Controllers
             return View(new Disciplina());
         }
 
+        public async Task<IActionResult> Editar(int id)
+        {
+            Disciplina disciplina = await _disciplinaRepo.ListarPorIdAsync(id);
+            if (disciplina == null) return NotFound();
+
+            var cursos = _context.Cursos.ToList();
+            ViewBag.Cursos = new SelectList(cursos, "Id", "Nome");
+
+            return View(disciplina);
+        }
+
+        public async Task<IActionResult> Apagar(int id)
+        {
+            Disciplina disciplina = await _disciplinaRepo.ListarPorIdAsync(id);
+            return disciplina == null ? NotFound() : View(disciplina);
+        }
+
+        public async Task<IActionResult> ApagarDisciplina(int id)
+        {
+            try
+            {
+                bool apagado = await _disciplinaRepo.ApagarAsync(id);
+                if (apagado)
+                {
+                    TempData["MensagemSucesso"] = "Disciplina deletada com sucesso";
+                }
+                else
+                {
+                    TempData["MensagemErro"] = "Ops, não conseguimos deletar a Disciplina. Tente novamente.";
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não conseguimos deletar a Disciplina. Tente novamente. Detalhe do erro: {erro.Message}.";
+                return RedirectToAction("Index");
+            }
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Criar(Disciplina disciplina)
         {
             try
             {
-                if (!ModelState["Nome"].Errors.Any() && !ModelState["CargaHoraria"].Errors.Any() && !ModelState["Creditos"].Errors.Any() && !ModelState["CursoId"].Errors.Any())
+                if (!ModelState["Nome"].Errors.Any() && !ModelState["CargaHoraria"].Errors.Any() && !ModelState["Creditos"].Errors.Any() && !ModelState["CursoId"].Errors.Any() && !ModelState["CargaHoraria"].Errors.Any() && !ModelState["QuantAulasPorSemana"].Errors.Any())
                 {
                     disciplina.DataCadastro = DateTime.Now;
                     await _disciplinaRepo.AdicionarAsync(disciplina);
@@ -45,6 +84,31 @@ namespace ClassScheduler.Controllers
                 {
                     var cursos = _context.Cursos.ToList();
                     ViewBag.Cursos = new SelectList(cursos, "Id", "Nome");
+                    TempData["MensagemErro"] = $"Ops, dados digitados incorretamente.";
+                    return View(disciplina);
+                }
+            }
+            catch (Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não conseguimos cadastrar a Disciplina. Tente novamente. Detalhe do erro: {erro.Message}.";
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarDisciplina(Disciplina disciplina)
+        {
+            try
+            {
+                if (!ModelState["Nome"].Errors.Any() && !ModelState["CargaHoraria"].Errors.Any() && !ModelState["Creditos"].Errors.Any() && !ModelState["CursoId"].Errors.Any() && !ModelState["CargaHoraria"].Errors.Any() && !ModelState["QuantAulasPorSemana"].Errors.Any())
+                {
+                    await _disciplinaRepo.EditarAsync(disciplina);
+                    TempData["MensagemSucesso"] = "Disciplina alterada com sucesso";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
                     TempData["MensagemErro"] = $"Ops, dados digitados incorretamente.";
                     return View(disciplina);
                 }

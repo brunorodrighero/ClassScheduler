@@ -15,6 +15,7 @@ namespace ClassScheduler.Models
         public int CargaHoraria { get; set; }
 
         public int? Creditos { get; set; }
+        public int QuantAulasPorSemana { get; set; }
 
         public string? Descricao { get; set; }
 
