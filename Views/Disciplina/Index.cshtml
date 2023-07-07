@@ -1,5 +1,57 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Humanizer.Localisation;
+@model List<Disciplina>
+
 @{
+    ViewData["Title"] = "Lista de Disciplinas";
 }
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Lista de Disciplinas</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a class="btn btn-primary" asp-controller="Disciplina" asp-action="Criar">
+                <i class="bi bi-plus-circle"></i> &nbsp; Adicionar nova Disciplina
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid text-center">
+    <table id="table-disciplinas" class="table display">
+        <thead>
+            <tr>
+                <th scope="col">@Resource.ID</th>
+                <th scope="col">@Resource.Name</th>
+                <th scope="col">@Resource.CargaHoraria</th>
+                <th scope="col">@Resource.Creditos</th>
+                <th scope="col">@Resource.Description</th>
+                <th scope="col">@Resource.NomeCurso</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (Disciplina disciplina in Model)
+                {
+                    <tr>
+                        <th scope="row">@disciplina.Id</th>
+                        <td>@disciplina.Nome</td>
+                        <td>@disciplina.CargaHoraria</td>
+                        <td>@disciplina.Creditos</td>
+                        <td>@disciplina.Descricao</td>
+                        <td>@(disciplina.Curso?.Nome ?? "N/A")</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" class="btn btn-primary" asp-route-id="@disciplina.Id" asp-controller="Curso" asp-action="Editar"><i class="bi bi-pencil-square"></i> @Resource.Edit</a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@disciplina.Id" asp-controller="Curso" asp-action="Apagar"><i class="bi bi-x-square"></i> @Resource.Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

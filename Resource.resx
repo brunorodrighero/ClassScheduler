@@ -123,8 +123,14 @@
   <data name="AddNewProfessor" xml:space="preserve">
     <value>Adicionar Novo Professor</value>
   </data>
+  <data name="CargaHoraria" xml:space="preserve">
+    <value>Carga Horária</value>
+  </data>
   <data name="CoursesListing" xml:space="preserve">
     <value>Listagem de Cursos</value>
+  </data>
+  <data name="Creditos" xml:space="preserve">
+    <value>Créditos</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Apagar</value>
@@ -153,6 +159,9 @@
   </data>
   <data name="Name" xml:space="preserve">
     <value>Nome</value>
+  </data>
+  <data name="NomeCurso" xml:space="preserve">
+    <value>Nome do Curso</value>
   </data>
   <data name="NoProfessorsFound" xml:space="preserve">
     <value>Nenhum professor encontrado</value>

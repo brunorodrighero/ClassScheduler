@@ -1,5 +1,49 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Disciplina
 @{
+    ViewData["Title"] = "Adicionar Disciplina";
+}
+<div class="container-fluid text-center">
+
+    <h1>Adicionar Disciplina</h1>
+
+</div>
+
+<form asp-controller="Disciplina" asp-action="Criar" method="post">
+    <div class="form-group mb-3">
+        <label for="Nome" class="form-label">Nome</label>
+        <input type="text" asp-for="Nome" id="Nome" class="form-control" placeholder="Informe o nome da disciplina">
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="CargaHoraria" class="form-label">Carga Horária</label>
+        <input type="number" asp-for="CargaHoraria" id="CargaHoraria" class="form-control" placeholder="Informe a Carga Horária da disciplina, em horas">
+        <span asp-validation-for="CargaHoraria" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="Creditos" class="form-label">Créditos</label>
+        <input type="number" asp-for="Creditos" id="Creditos" class="form-control" placeholder="Informe os créditos da disciplina">
+        <span asp-validation-for="Creditos" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="Descricao" class="form-label">Descrição da Disciplina</label>
+        <input type="text" asp-for="Descricao" id="Descricao" class="form-control" placeholder="Informe a Descrição da disciplina">
+        <span asp-validation-for="Descricao" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="CursoId" class="form-label">Curso</label>
+        <select asp-for="CursoId" asp-items="ViewBag.Cursos" class="form-control">
+            <option value="">Selecione o curso</option>
+        </select>
+        <span asp-validation-for="CursoId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100 mb-2"><i class="bi bi-building-add"></i> Adicionar</button>
+    <a class="btn btn-secondary w-100" role="button" asp-controller="Disciplina" asp-action="Index"><i class="bi bi-skip-backward"></i> Voltar</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
 }

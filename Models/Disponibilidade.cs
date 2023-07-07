@@ -17,5 +17,9 @@ namespace ClassScheduler.Models
         public int SalaId { get; set; }
 
         public ICollection<DisponibilidadeDia> DisponibilidadeDias { get; set; }
+
+        public DateTime? DataCadastro { get; set; }
+
+        public DateTime? DataAtualizacao { get; set; }
     }
 }

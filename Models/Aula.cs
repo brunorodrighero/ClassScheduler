@@ -25,5 +25,9 @@ namespace ClassScheduler.Models
         [ForeignKey("SalaId")]
         public Sala Sala { get; set; }
         public int SalaId { get; set; }
+
+        public DateTime? DataCadastro { get; set; }
+
+        public DateTime? DataAtualizacao { get; set; }
     }
 }

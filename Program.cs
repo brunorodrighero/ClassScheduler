@@ -13,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IProfessorRepo, ProfessorRepo>();
 builder.Services.AddScoped<ICursoRepo, CursoRepo>();
+builder.Services.AddScoped<IDisciplinaRepo, DisciplinaRepo>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

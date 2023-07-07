@@ -79,11 +79,29 @@ namespace ClassScheduler {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Carga Horária.
+        /// </summary>
+        public static string CargaHoraria {
+            get {
+                return ResourceManager.GetString("CargaHoraria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Listagem de Cursos.
         /// </summary>
         public static string CoursesListing {
             get {
                 return ResourceManager.GetString("CoursesListing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Créditos.
+        /// </summary>
+        public static string Creditos {
+            get {
+                return ResourceManager.GetString("Creditos", resourceCulture);
             }
         }
         
@@ -165,6 +183,15 @@ namespace ClassScheduler {
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nome do Curso.
+        /// </summary>
+        public static string NomeCurso {
+            get {
+                return ResourceManager.GetString("NomeCurso", resourceCulture);
             }
         }
         

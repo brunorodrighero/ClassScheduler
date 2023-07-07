@@ -20,5 +20,9 @@ namespace ClassScheduler.Models
         [ForeignKey("DisponibilidadeId")]
         public Disponibilidade Disponibilidade { get; set; }
         public int DisponibilidadeId { get; set; }
+
+        public DateTime? DataCadastro { get; set; }
+
+        public DateTime? DataAtualizacao { get; set; }
     }
 }

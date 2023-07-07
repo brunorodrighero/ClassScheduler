@@ -25,5 +25,9 @@ namespace ClassScheduler.Models
         public List<Aula>? Aulas { get; set; }
 
         public List<Disponibilidade>? Disponibilidades { get; set; }
+
+        public DateTime? DataCadastro { get; set; }
+
+        public DateTime? DataAtualizacao { get; set; }
     }
 }
