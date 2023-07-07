@@ -36,6 +36,7 @@ namespace ClassScheduler.Repo
 
             disciplinaDB.Nome = disciplina.Nome;
             disciplinaDB.CargaHoraria = disciplina.CargaHoraria;
+            disciplinaDB.QuantAulasPorSemana = disciplina.QuantAulasPorSemana;
             disciplinaDB.Descricao = disciplina.Descricao;
             disciplinaDB.Creditos = disciplina.Creditos;
             disciplinaDB.DataAtualizacao = DateTime.Now;

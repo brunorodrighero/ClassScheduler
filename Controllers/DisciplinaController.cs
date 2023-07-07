@@ -23,7 +23,7 @@ namespace ClassScheduler.Controllers
         }
         public IActionResult Criar()
         {
-            var cursos = _context.Cursos.ToList();
+            List<Curso> cursos = _context.Cursos.ToList();
             ViewBag.Cursos = new SelectList(cursos, "Id", "Nome");
             return View(new Disciplina());
         }
@@ -33,7 +33,7 @@ namespace ClassScheduler.Controllers
             Disciplina disciplina = await _disciplinaRepo.ListarPorIdAsync(id);
             if (disciplina == null) return NotFound();
 
-            var cursos = _context.Cursos.ToList();
+            List<Curso> cursos = _context.Cursos.ToList();
             ViewBag.Cursos = new SelectList(cursos, "Id", "Nome");
 
             return View(disciplina);
