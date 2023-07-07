@@ -67,7 +67,7 @@
                     var titulacao = titulacaoMap[professor.Titulacao];
 
                     <tr>
-                        <th scope="row">@professor.Id</th>
+                        <td scope="row">@professor.Id</td>
                         <td>@professor.Nome</td>
                         <td>@professor.Sobrenome</td>
                         <td>@titulacao</td>
@@ -76,8 +76,8 @@
                         <td>@professor.DataCadastro</td>
                         <td>
                             <div class="btn-group" role="group">
-                                <a role="button" class="btn btn-primary" asp-route-id="@professor.Id" asp-controller="Professor" asp-action="Editar">@Resource.Edit</a>
-                                <a role="button" class="btn btn-danger" asp-route-id="@professor.Id" asp-controller="Professor" asp-action="Apagar">@Resource.Delete</a>
+                                <a role="button" class="btn btn-primary" asp-route-id="@professor.Id" asp-controller="Professor" asp-action="Editar"><i class="bi bi-pencil-square"></i> @Resource.Edit</a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@professor.Id" asp-controller="Professor" asp-action="Apagar"><i class="bi bi-x-square"></i> @Resource.Delete</a>
                             </div>
                         </td>
                     </tr>

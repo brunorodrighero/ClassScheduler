@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     getDataTable("#table-professores");
     getDataTable("#table-cursos");
+    //getDataTable("#table-home");
 
 
     $(".close-alert").click(function () {
