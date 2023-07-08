@@ -2,16 +2,18 @@
 using ClassScheduler.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace ClassScheduler.Controllers
 {
     public class DisponibilidadeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private List<DisponibilidadeDia> DisponibilidadeDias;
+
         public DisponibilidadeController(ApplicationDbContext context)
         {
             _context = context;
+            DisponibilidadeDias = new List<DisponibilidadeDia>();
         }
 
         public IActionResult DispProfessor()
@@ -33,23 +35,77 @@ namespace ClassScheduler.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditarDispProfessor(Disponibilidade disponibilidade)
+        public async Task<IActionResult> CriarDispProfessor(Disponibilidade disponibilidade, string disponibilidadeDias)
         {
-            if (ModelState.IsValid)
+            // Converte disponibilidadeDias de string para uma lista de objetos DisponibilidadeDia
+            if (disponibilidade != null && disponibilidadeDias != null)
             {
-                // Busca a disponibilidade do professor com base no ProfessorId
-                var professorDisponibilidade = await _context.Disponibilidades
-                    .Include(d => d.Professor)
-                    .Where(d => d.ProfessorId == disponibilidade.ProfessorId)
-                    .ToListAsync();
-
-                // Redireciona para a view EditarDispProfessor com os dados da disponibilidade
-                return View("EditarDispProfessor", professorDisponibilidade);
+                disponibilidade.DisponibilidadeDias = disponibilidadeDias.Split(',').Select(s => new DisponibilidadeDia
+                {
+                    DiaDaSemana = (DayOfWeek)int.Parse(s.Split('-')[0]),
+                    HoraInicio = TimeSpan.Parse(s.Split('-')[1]),
+                    // Calcula HoraFim com base em HoraInicio
+                    HoraFim = TimeSpan.Parse(s.Split('-')[1]).Add(TimeSpan.FromMinutes(50))  // Atualize isso de acordo com a duração da aula
+                }).ToList();
+            }
+            else
+            {
+                // Lidar com a situação em que disponibilidade ou disponibilidadeDias é null
             }
 
-            // Se o ModelState for inválido, retorna para a mesma view com os erros
-            return View(disponibilidade);
+
+            if (/*ModelState.IsValid*/true)
+            {
+                // Cria a nova disponibilidade
+                _context.Disponibilidades.Add(disponibilidade);
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(disponibilidade);
+            }
         }
 
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarDispProfessor(Disponibilidade disponibilidade)
+        {
+            if (/*ModelState.IsValid*/true)
+            {
+                // Remove todas as disponibilidades anteriores deste professor
+                var disponibilidadesAnteriores = _context.DisponibilidadesDias.Where(dd => dd.Disponibilidade.ProfessorId == disponibilidade.ProfessorId);
+                _context.DisponibilidadesDias.RemoveRange(disponibilidadesAnteriores);
+
+                // Salva a nova disponibilidade
+                foreach (var dia in disponibilidade.DisponibilidadeDias)
+                {
+                    _context.DisponibilidadesDias.Add(new DisponibilidadeDia { Disponibilidade = disponibilidade, DiaDaSemana = dia.DiaDaSemana, HoraInicio = dia.HoraInicio, HoraFim = dia.HoraFim });
+                }
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(disponibilidade);
+            }
+        }
+
+        public DayOfWeek ConvertStringToDayOfWeek(string dayOfWeekString)
+        {
+            return Enum.Parse<DayOfWeek>(dayOfWeekString, ignoreCase: true);
+        }
+
+        public TimeSpan ConvertStringToTimeSpan(string timeString)
+        {
+            return TimeSpan.Parse(timeString);
+        }
     }
 }
