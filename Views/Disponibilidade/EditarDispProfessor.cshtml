@@ -1,0 +1,150 @@
+﻿@model Disponibilidade
+
+@{
+    ViewData["Title"] = "Editar Disponibilidade do Professor";
+}
+
+<form asp-controller="Disponibilidade" asp-action="EditarDispProfessor" method="post">
+    <h2>@*@Model.Professor.NomeCompleto*@TESTE</h2>
+    <h4>Disponibilidade</h4>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Segunda</th>
+                <th>Terça</th>
+                <th>Quarta</th>
+                <th>Quinta</th>
+                <th>Sexta</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>07:30 - 08:20</td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+            </tr>
+            <tr>
+                <td>08:20 - 09:10</td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+            </tr>
+            <tr>
+                <td>09:10 - 10:00</td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+            </tr>
+            <tr>
+                <td>10:20 - 11:10</td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+            </tr>
+            <tr>
+                <td>11:10 - 12:00</td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+                <td>
+                    <button class="btn btn-danger btn-availability w-100" onclick="toggleAvailability(this)">Indisponível</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
+

@@ -11,7 +11,21 @@
 
     $('#Celular').mask('(00)00000-0000');
     $('#Telefone').mask('(00)0000-0000');
+
+    $('.btn-availability').click(function () {
+        event.preventDefault();
+        if ($(this).hasClass('btn-success')) {
+            $(this).removeClass('btn-success');
+            $(this).addClass('btn-danger');
+            $(this).text('Indisponível');
+        } else {
+            $(this).removeClass('btn-danger');
+            $(this).addClass('btn-success');
+            $(this).text('Disponível');
+        }
+    });
 });
+
 
 function getDataTable(id) {
     $(id).DataTable({

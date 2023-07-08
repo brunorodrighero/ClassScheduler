@@ -35,5 +35,11 @@ namespace ClassScheduler.Models
         public List<Disponibilidade>? Disponibilidades { get; set; }
 
         public List<Aula>? Aulas { get; set; }
+
+        public string NomeCompleto
+        {
+            get { return Nome + " " + Sobrenome; }
+        }
+
     }
 }

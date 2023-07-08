@@ -1,0 +1,29 @@
+﻿@model Disponibilidade
+
+@{
+    ViewData["Title"] = "Selecione o Professor";
+}
+
+<form asp-controller="Disponibilidade" asp-action="EditarDispProfessor" method="post">
+    <div class="form-group mb-3">
+        <label for="ProfessorId" class="form-label">Professor</label>
+        <select asp-for="ProfessorId" asp-items="ViewBag.Professor" class="form-control">
+            <option value="">Selecione o professor</option>
+        </select>
+        <span asp-validation-for="ProfessorId" class="text-danger"></span>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
+            <a class="btn btn-secondary w-100" role="button" asp-controller="Home" asp-action="Index">
+                <i class="bi bi-skip-backward"></i> Voltar
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="bi bi-check2"></i> Selecionar
+            </button>
+        </div>
+    </div>
+</form>
+
+
