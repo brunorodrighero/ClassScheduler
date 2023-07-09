@@ -13,7 +13,7 @@ namespace ClassScheduler.Data
         public DbSet<Aula> Aulas { get; set; }
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }
-        public DbSet<Disponibilidade> Disponibilidades { get; set; }
+        public DbSet<DisponibilidadeProfessor> Disponibilidades { get; set; }
         public DbSet<DisponibilidadeDia> DisponibilidadesDias { get; set; }
         public DbSet<Professor> Professores { get; set; }
         public DbSet<Sala> Salas { get; set; }

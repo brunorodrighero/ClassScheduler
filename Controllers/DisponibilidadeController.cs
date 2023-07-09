@@ -20,7 +20,7 @@ namespace ClassScheduler.Controllers
         {
             List<Professor> professores = _context.Professores.ToList();
             ViewBag.Professor = new SelectList(professores, "Id", "NomeCompleto");
-            return View(new Disponibilidade());
+            return View(new DisponibilidadeProfessor());
         }
 
         public IActionResult DispDisciplina()
@@ -35,12 +35,12 @@ namespace ClassScheduler.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CriarDispProfessor(Disponibilidade disponibilidade, string disponibilidadeDias)
+        public async Task<IActionResult> CriarDispProfessor(DisponibilidadeProfessor disponibilidadeProfessor, string disponibilidadeDias)
         {
             // Converte disponibilidadeDias de string para uma lista de objetos DisponibilidadeDia
-            if (disponibilidade != null && disponibilidadeDias != null)
+            if (disponibilidadeProfessor != null && disponibilidadeDias != null)
             {
-                disponibilidade.DisponibilidadeDias = disponibilidadeDias.Split(',').Select(s => new DisponibilidadeDia
+                disponibilidadeProfessor.DisponibilidadeDias = disponibilidadeDias.Split(',').Select(s => new DisponibilidadeDia
                 {
                     DiaDaSemana = (DayOfWeek)int.Parse(s.Split('-')[0]),
                     HoraInicio = TimeSpan.Parse(s.Split('-')[1]),
@@ -57,7 +57,7 @@ namespace ClassScheduler.Controllers
             if (/*ModelState.IsValid*/true)
             {
                 // Cria a nova disponibilidade
-                _context.Disponibilidades.Add(disponibilidade);
+                _context.Disponibilidades.Add(disponibilidadeProfessor);
 
                 await _context.SaveChangesAsync();
 
@@ -65,7 +65,7 @@ namespace ClassScheduler.Controllers
             }
             else
             {
-                return View(disponibilidade);
+                return View(disponibilidadeProfessor);
             }
         }
 
@@ -74,7 +74,7 @@ namespace ClassScheduler.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditarDispProfessor(Disponibilidade disponibilidade)
+        public async Task<IActionResult> EditarDispProfessor(DisponibilidadeProfessor disponibilidade)
         {
             if (/*ModelState.IsValid*/true)
             {

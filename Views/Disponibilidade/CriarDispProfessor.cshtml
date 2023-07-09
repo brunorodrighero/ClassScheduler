@@ -1,8 +1,8 @@
-﻿@model Disponibilidade
+﻿@model DisponibilidadeProfessor
 @{
     ViewData["Title"] = "Criar Disponibilidade do Professor";
     var diasDaSemana = new string[] { "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo" };
-    var horarios = new string[] { "07:30 - 08:20", "08:20 - 09:10", "09:10 - 10:00", "10:20 - 11:10", "11:10 - 12:00" };
+    var horarios = new string[] { "07:30 - 08:20", "08:20 - 09:10", "09:10 - 10:00", "10:20 - 11:10", "11:10 - 12:00" };    
 }
 
 <form asp-controller="Disponibilidade" asp-action="CriarDispProfessor" method="post">
@@ -29,7 +29,7 @@
                     @for (var i = 0; i < diasDaSemana.Length; i++)
                     {
                         <td>
-                            <input type="hidden" name="DisponibilidadeDias[@i].DiaDaSemana" value="@i" />
+                            <input type="hidden" name="Disponibilidade.DisponibilidadeDias[@i].DiaDaSemana" value="@i" />
                             <input type="hidden" name="DisponibilidadeDias[@i].HoraInicio" value="@horario" />
                             <button class="btn btn-success btn-availability w-100"
                                     onclick="toggleAvailability(this)"

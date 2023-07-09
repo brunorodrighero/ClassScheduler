@@ -18,9 +18,9 @@ namespace ClassScheduler.Models
         [StringLength(500)]
         public string Descricao { get; set; }
 
-        public List<Aula> Aulas { get; set; }
+        public virtual List<Aula> Aulas { get; set; }
 
-        public List<Disponibilidade> Disponibilidades { get; set; }
+        public virtual List<DisponibilidadeProfessor> Disponibilidades { get; set; }
 
         public DateTime? DataCadastro { get; set; }
 

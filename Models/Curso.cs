@@ -16,7 +16,7 @@ namespace ClassScheduler.Models
 
         public string? Descricao { get; set; }
 
-        public List<Disciplina>? Disciplinas { get; set; }
+        public virtual List<Disciplina>? Disciplinas { get; set; }
 
         public DateTime DataCadastro { get; set; }
 

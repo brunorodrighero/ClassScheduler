@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClassScheduler.Models
 {
@@ -11,15 +10,13 @@ namespace ClassScheduler.Models
         [Required]
         public DayOfWeek DiaDaSemana { get; set; }
 
-        [Required]
-        public TimeSpan HoraInicio { get; set; }
+        public virtual ICollection<Horario> Horarios { get; set; }
 
-        [Required]
-        public TimeSpan HoraFim { get; set; }
+        public virtual ICollection<DisponibilidadeProfessorDia> DisponibilidadeProfessorDias { get; set; }
 
-        [ForeignKey("DisponibilidadeId")]
-        public Disponibilidade Disponibilidade { get; set; }
-        public int DisponibilidadeId { get; set; }
+        public virtual ICollection<DisponibilidadeDisciplinaDia> DisponibilidadeDisciplinaDias { get; set; }
+
+        public virtual ICollection<DisponibilidadeSalaDia> DisponibilidadeSalaDias { get; set; }
 
         public DateTime? DataCadastro { get; set; }
 
