@@ -9,12 +9,10 @@ namespace ClassScheduler.Controllers
     public class DisponibilidadeController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private List<DisponibilidadeDia> DisponibilidadeDias;
 
         public DisponibilidadeController(ApplicationDbContext context)
         {
             _context = context;
-            DisponibilidadeDias = new List<DisponibilidadeDia>();
         }
 
         public IActionResult DispProfessor()
@@ -63,6 +61,9 @@ namespace ClassScheduler.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CriarDispProfessor(int id, DisponibilidadeProfessor dispProfessor)
         {
+            // Vincula os dias de disponibilidade
+            BindDiasDisponibilidade(dispProfessor);
+
             if (ModelState.IsValid)
             {
                 var existingDispProfessor = _context.DisponibilidadesProfessores
@@ -73,8 +74,12 @@ namespace ClassScheduler.Controllers
 
                 if (existingDispProfessor != null)
                 {
-                    // Atualizar os horários existentes aqui
-                    // Remova os antigos, adicione novos
+                    // Remova os antigos
+                    _context.DisponibilidadesProfessoresDias.RemoveRange(existingDispProfessor.DisponibilidadeProfessorDias);
+
+                    // Adicione novos
+                    existingDispProfessor.DisponibilidadeProfessorDias = dispProfessor.DisponibilidadeProfessorDias;
+                    _context.DisponibilidadesProfessores.Update(existingDispProfessor);
                 }
                 else
                 {
@@ -89,7 +94,30 @@ namespace ClassScheduler.Controllers
 
             return View(dispProfessor);
         }
+
+        private void BindDiasDisponibilidade(DisponibilidadeProfessor dispProfessor)
+        {
+            if (dispProfessor.DisponibilidadeDiasInput != null)
+            {
+                var dias = dispProfessor.DisponibilidadeDiasInput.Split(',');
+                foreach (var dia in dias)
+                {
+                    if (Enum.TryParse<DayOfWeek>(dia, out var diaDaSemana))
+                    {
+                        var dispDia = new DisponibilidadeDia { DiaDaSemana = diaDaSemana };
+
+                        var dispProfDia = new DisponibilidadeProfessorDia
+                        {
+                            DisponibilidadeProfessor = dispProfessor,
+                            DisponibilidadeDia = dispDia
+                        };
+
+                        dispProfessor.DisponibilidadeProfessorDias.Add(dispProfDia);
+                    }
+                }
+            }
+        }
+
+
     }
-
-
 }

@@ -10,36 +10,51 @@
     $('#Celular').mask('(00)00000-0000');
     $('#Telefone').mask('(00)0000-0000');
 
-    $('.btn-availability').click(function (event) {
-        event.preventDefault();
+    var disponibilidadeDias = $('#DisponibilidadeDiasInput').val().split(',');
+
+    $('.btn-availability').each(function () {
         var dia = $(this).attr('data-dia');
-        var horario = $(this).attr('data-horario');
+        var horarioInicio = $(this).attr('data-horario-inicio');
+        var horarioFim = $(this).attr('data-horario-fim');
 
-        // Verifica se o botão indica que o horário está disponível
-        var disponivel = $(this).text().trim() === 'Disponível';
-
-        // Obtem a lista atual de dias de disponibilidade
-        var disponibilidadeDias = $('#DisponibilidadeDias').val().split(',');
-
-        // Determina o índice do dia na lista
-        var diaIndex = disponibilidadeDias.indexOf(dia + '-' + horario);
+        var disponivel = disponibilidadeDias.indexOf(dia + '-' + horarioInicio + '-' + horarioFim) !== -1;
 
         if (disponivel) {
-            // Se o dia estiver disponível, remove da lista
+            $(this).removeClass('btn-danger');
+            $(this).addClass('btn-success');
+            $(this).text('Disponível');
+        } else {
+            $(this).removeClass('btn-success');
+            $(this).addClass('btn-danger');
+            $(this).text('Indisponível');
+        }
+    });
+
+    $('.btn-availability').click(function (event) {
+        event.preventDefault();
+
+        var dia = $(this).attr('data-dia');
+        var horarioInicio = $(this).attr('data-horario-inicio');
+        var horarioFim = $(this).attr('data-horario-fim');
+
+        var disponivel = $(this).text().trim() === 'Disponível';
+
+        var disponibilidadeDias = $('#DisponibilidadeDiasInput').val().split(',');
+
+        var diaIndex = disponibilidadeDias.indexOf(dia + '-' + horarioInicio + '-' + horarioFim);
+
+        if (disponivel) {
             if (diaIndex !== -1) {
                 disponibilidadeDias.splice(diaIndex, 1);
             }
         } else {
-            // Se o dia não estiver disponível, adiciona à lista
             if (diaIndex === -1) {
-                disponibilidadeDias.push(dia + '-' + horario);
+                disponibilidadeDias.push(dia + '-' + horarioInicio + '-' + horarioFim);
             }
         }
 
-        // Atualiza o valor do campo oculto com a nova lista de dias
         $('#DisponibilidadeDiasInput').val(disponibilidadeDias.join(','));
 
-        // Alterna o estado do botão
         if (disponivel) {
             $(this).removeClass('btn-success');
             $(this).addClass('btn-danger');

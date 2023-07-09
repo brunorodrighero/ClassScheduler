@@ -5,6 +5,10 @@ namespace ClassScheduler.Models
 {
     public class DisponibilidadeProfessor
     {
+        public DisponibilidadeProfessor()
+        {
+            DisponibilidadeProfessorDias = new List<DisponibilidadeProfessorDia>();
+        }
         [Key]
         public int Id { get; set; }
 
@@ -17,5 +21,8 @@ namespace ClassScheduler.Models
         public DateTime? DataCadastro { get; set; }
 
         public DateTime? DataAtualizacao { get; set; }
+
+        [NotMapped]
+        public string DisponibilidadeDiasInput { get; set; }
     }
 }
