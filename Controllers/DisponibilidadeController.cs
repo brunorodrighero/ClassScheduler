@@ -2,6 +2,7 @@
 using ClassScheduler.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClassScheduler.Controllers
 {
@@ -33,79 +34,62 @@ namespace ClassScheduler.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CriarDispProfessor(DisponibilidadeProfessor disponibilidadeProfessor, string disponibilidadeDias)
+        public IActionResult CriarDispProfessor(int id)
         {
-            // Converte disponibilidadeDias de string para uma lista de objetos DisponibilidadeDia
-            if (disponibilidadeProfessor != null && disponibilidadeDias != null)
+            var professor = _context.Professores.Find(id);
+            if (professor == null)
             {
-                disponibilidadeProfessor.DisponibilidadeDias = disponibilidadeDias.Split(',').Select(s => new DisponibilidadeDia
+                return NotFound();
+            }
+
+            var dispProfessor = _context.DisponibilidadesProfessores
+                .Include(dp => dp.DisponibilidadeProfessorDias)
+                .ThenInclude(dpd => dpd.DisponibilidadeDia)
+                .ThenInclude(dd => dd.Horarios)
+                .FirstOrDefault(dp => dp.ProfessorId == id);
+
+            if (dispProfessor == null)
+            {
+                dispProfessor = new DisponibilidadeProfessor
                 {
-                    DiaDaSemana = (DayOfWeek)int.Parse(s.Split('-')[0]),
-                    HoraInicio = TimeSpan.Parse(s.Split('-')[1]),
-                    // Calcula HoraFim com base em HoraInicio
-                    HoraFim = TimeSpan.Parse(s.Split('-')[1]).Add(TimeSpan.FromMinutes(50))  // Atualize isso de acordo com a duração da aula
-                }).ToList();
-            }
-            else
-            {
-                // Lidar com a situação em que disponibilidade ou disponibilidadeDias é null
+                    Professor = professor
+                };
             }
 
-
-            if (/*ModelState.IsValid*/true)
-            {
-                // Cria a nova disponibilidade
-                _context.Disponibilidades.Add(disponibilidadeProfessor);
-
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return View(disponibilidadeProfessor);
-            }
+            return View(dispProfessor);
         }
 
-
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditarDispProfessor(DisponibilidadeProfessor disponibilidade)
+        public IActionResult CriarDispProfessor(int id, DisponibilidadeProfessor dispProfessor)
         {
-            if (/*ModelState.IsValid*/true)
+            if (ModelState.IsValid)
             {
-                // Remove todas as disponibilidades anteriores deste professor
-                var disponibilidadesAnteriores = _context.DisponibilidadesDias.Where(dd => dd.Disponibilidade.ProfessorId == disponibilidade.ProfessorId);
-                _context.DisponibilidadesDias.RemoveRange(disponibilidadesAnteriores);
+                var existingDispProfessor = _context.DisponibilidadesProfessores
+                    .Include(dp => dp.DisponibilidadeProfessorDias)
+                    .ThenInclude(dpd => dpd.DisponibilidadeDia)
+                    .ThenInclude(dd => dd.Horarios)
+                    .FirstOrDefault(dp => dp.ProfessorId == id);
 
-                // Salva a nova disponibilidade
-                foreach (var dia in disponibilidade.DisponibilidadeDias)
+                if (existingDispProfessor != null)
                 {
-                    _context.DisponibilidadesDias.Add(new DisponibilidadeDia { Disponibilidade = disponibilidade, DiaDaSemana = dia.DiaDaSemana, HoraInicio = dia.HoraInicio, HoraFim = dia.HoraFim });
+                    // Atualizar os horários existentes aqui
+                    // Remova os antigos, adicione novos
+                }
+                else
+                {
+                    // Criar nova disponibilidade
+                    _context.Add(dispProfessor);
                 }
 
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
-            else
-            {
-                return View(disponibilidade);
-            }
-        }
 
-        public DayOfWeek ConvertStringToDayOfWeek(string dayOfWeekString)
-        {
-            return Enum.Parse<DayOfWeek>(dayOfWeekString, ignoreCase: true);
-        }
-
-        public TimeSpan ConvertStringToTimeSpan(string timeString)
-        {
-            return TimeSpan.Parse(timeString);
+            return View(dispProfessor);
         }
     }
+
+
 }

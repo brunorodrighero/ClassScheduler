@@ -52,7 +52,7 @@ namespace ClassScheduler.Repo
 
         public async Task<Curso> ListarPorIdAsync(int id)
         {
-            return await _context.Cursos.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Cursos.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Curso não encontrado.");
         }
     }
 }

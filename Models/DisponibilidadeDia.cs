@@ -12,11 +12,11 @@ namespace ClassScheduler.Models
 
         public virtual ICollection<Horario> Horarios { get; set; }
 
-        public virtual ICollection<DisponibilidadeProfessorDia> DisponibilidadeProfessorDias { get; set; }
+        public virtual ICollection<DisponibilidadeProfessorDia>? DisponibilidadeProfessorDias { get; set; }
 
-        public virtual ICollection<DisponibilidadeDisciplinaDia> DisponibilidadeDisciplinaDias { get; set; }
+        public virtual ICollection<DisponibilidadeDisciplinaDia>? DisponibilidadeDisciplinaDias { get; set; }
 
-        public virtual ICollection<DisponibilidadeSalaDia> DisponibilidadeSalaDias { get; set; }
+        public virtual ICollection<DisponibilidadeSalaDia>? DisponibilidadeSalaDias { get; set; }
 
         public DateTime? DataCadastro { get; set; }
 
