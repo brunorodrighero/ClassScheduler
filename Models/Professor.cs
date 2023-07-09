@@ -26,15 +26,15 @@ namespace ClassScheduler.Models
 
         [RegularExpression(@"^\(\d{2}\)\d{4}-\d{4}$", ErrorMessage = "O campo Telefone não está no formato correto.")]
         [Phone(ErrorMessage = "O telefone não é válido.")]
-        public string Telefone { get; set; }
+        public string? Telefone { get; set; }
 
         public DateTime? DataCadastro { get; set; }
 
         public DateTime? DataAtualizacao { get; set; }
 
-        public List<Disponibilidade>? Disponibilidades { get; set; }
+        public virtual List<DisponibilidadeProfessor>? Disponibilidades { get; set; }
 
-        public List<Aula>? Aulas { get; set; }
+        public virtual List<Aula>? Aulas { get; set; }
 
         public string NomeCompleto
         {

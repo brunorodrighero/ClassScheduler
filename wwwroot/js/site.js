@@ -3,8 +3,6 @@
     getDataTable("#table-cursos");
     getDataTable("#table-disciplinas");
 
-
-
     $(".close-alert").click(function () {
         $(".alert").hide();
     });
@@ -12,9 +10,37 @@
     $('#Celular').mask('(00)00000-0000');
     $('#Telefone').mask('(00)0000-0000');
 
-    $('.btn-availability').click(function () {
+    $('.btn-availability').click(function (event) {
         event.preventDefault();
-        if ($(this).hasClass('btn-success')) {
+        var dia = $(this).attr('data-dia');
+        var horario = $(this).attr('data-horario');
+
+        // Verifica se o botão indica que o horário está disponível
+        var disponivel = $(this).text().trim() === 'Disponível';
+
+        // Obtem a lista atual de dias de disponibilidade
+        var disponibilidadeDias = $('#DisponibilidadeDias').val().split(',');
+
+        // Determina o índice do dia na lista
+        var diaIndex = disponibilidadeDias.indexOf(dia + '-' + horario);
+
+        if (disponivel) {
+            // Se o dia estiver disponível, remove da lista
+            if (diaIndex !== -1) {
+                disponibilidadeDias.splice(diaIndex, 1);
+            }
+        } else {
+            // Se o dia não estiver disponível, adiciona à lista
+            if (diaIndex === -1) {
+                disponibilidadeDias.push(dia + '-' + horario);
+            }
+        }
+
+        // Atualiza o valor do campo oculto com a nova lista de dias
+        $('#DisponibilidadeDiasInput').val(disponibilidadeDias.join(','));
+
+        // Alterna o estado do botão
+        if (disponivel) {
             $(this).removeClass('btn-success');
             $(this).addClass('btn-danger');
             $(this).text('Indisponível');
@@ -55,6 +81,5 @@ function getDataTable(id) {
                 "sSortDescending": ": Ordenar colunas de forma descendente"
             }
         }
-    }
-    );
+    });
 }

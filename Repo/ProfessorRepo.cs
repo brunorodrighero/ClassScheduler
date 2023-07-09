@@ -54,7 +54,7 @@ namespace ClassScheduler.Repo
 
         public async Task<Professor> ListarPorIdAsync(int id)
         {
-            return await _context.Professores.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Professores.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Professor não encontrado.");
         }
     }
 }

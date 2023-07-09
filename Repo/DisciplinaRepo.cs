@@ -54,7 +54,7 @@ namespace ClassScheduler.Repo
 
         public async Task<Disciplina> ListarPorIdAsync(int id)
         {
-            return await _context.Disciplinas.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Disciplinas.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Disciplina não encontrada.");
         }
 
         public async Task<List<Disciplina>> BuscarTodosComCursoAsync()

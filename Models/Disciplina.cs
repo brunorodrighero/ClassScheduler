@@ -20,12 +20,12 @@ namespace ClassScheduler.Models
         public string? Descricao { get; set; }
 
         [ForeignKey("CursoId")]
-        public Curso? Curso { get; set; }
+        public virtual Curso? Curso { get; set; }
         public int? CursoId { get; set; }
 
-        public List<Aula>? Aulas { get; set; }
+        public virtual List<Aula>? Aulas { get; set; }
 
-        public List<Disponibilidade>? Disponibilidades { get; set; }
+        public virtual List<DisponibilidadeProfessor>? Disponibilidades { get; set; }
 
         public DateTime? DataCadastro { get; set; }
 
