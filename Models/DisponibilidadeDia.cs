@@ -2,7 +2,7 @@
 
 namespace ClassScheduler.Models
 {
-    public class DisponibilidadeDia
+    public class DisponibilidadeDia : BaseEntity
     {
         [Key]
         public int Id { get; set; }
@@ -10,17 +10,9 @@ namespace ClassScheduler.Models
         [Required]
         public DayOfWeek DiaDaSemana { get; set; }
 
-        public virtual ICollection<Horario> Horarios { get; set; }
-
-        public virtual ICollection<DisponibilidadeProfessorDia>? DisponibilidadeProfessorDias { get; set; }
-
-        public virtual ICollection<DisponibilidadeDisciplinaDia>? DisponibilidadeDisciplinaDias { get; set; }
-
-        public virtual ICollection<DisponibilidadeSalaDia>? DisponibilidadeSalaDias { get; set; }
-
-        public DateTime? DataCadastro { get; set; }
-
-        public DateTime? DataAtualizacao { get; set; }
-
+        public virtual ICollection<Professor>? Professores { get; set; }
+        public virtual ICollection<Sala>? Salas { get; set; }
+        public virtual ICollection<Disciplina>? Disciplinas { get; set; }
+        public virtual ICollection<DisponibilidadeHorario>? HorariosDisponiveis { get; set; }
     }
 }

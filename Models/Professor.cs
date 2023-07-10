@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ClassScheduler.Models
 {
-    public class Professor
+    public class Professor : BaseEntity
     {
         [Key]
         public int Id { get; set; }
@@ -28,11 +28,7 @@ namespace ClassScheduler.Models
         [Phone(ErrorMessage = "O telefone não é válido.")]
         public string? Telefone { get; set; }
 
-        public DateTime? DataCadastro { get; set; }
-
-        public DateTime? DataAtualizacao { get; set; }
-
-        public virtual List<DisponibilidadeProfessor>? Disponibilidades { get; set; }
+        public virtual ICollection<DisponibilidadeDia>? DiasDisponiveis { get; set; }
 
         public virtual List<Aula>? Aulas { get; set; }
 

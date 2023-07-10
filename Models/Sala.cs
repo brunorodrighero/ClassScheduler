@@ -2,7 +2,7 @@
 
 namespace ClassScheduler.Models
 {
-    public class Sala
+    public class Sala : BaseEntity
     {
         [Key]
         public int Id { get; set; }
@@ -16,15 +16,11 @@ namespace ClassScheduler.Models
         public int Capacidade { get; set; }
 
         [StringLength(500)]
-        public string Descricao { get; set; }
+        public string? Descricao { get; set; }
 
-        public virtual List<Aula> Aulas { get; set; }
+        public virtual List<Aula>? Aulas { get; set; }
 
-        public virtual List<DisponibilidadeProfessor> Disponibilidades { get; set; }
-
-        public DateTime? DataCadastro { get; set; }
-
-        public DateTime? DataAtualizacao { get; set; }
+        public virtual ICollection<DisponibilidadeDia>? DiasDisponiveis { get; set; }
     }
 
 }

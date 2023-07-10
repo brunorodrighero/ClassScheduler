@@ -1,19 +1,19 @@
-﻿@model DisponibilidadeProfessor
+﻿@model Professor
 @{
     ViewData["Title"] = "Criar Disponibilidade do Professor";
     var diasDaSemana = new DayOfWeek[] { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday };
     var horariosInicio = new TimeSpan[] { TimeSpan.Parse("07:30"), TimeSpan.Parse("08:20"), TimeSpan.Parse("09:10"), TimeSpan.Parse("10:20"), TimeSpan.Parse("11:10") };
     var horariosFim = new TimeSpan[] { TimeSpan.Parse("08:20"), TimeSpan.Parse("09:10"), TimeSpan.Parse("10:00"), TimeSpan.Parse("11:10"), TimeSpan.Parse("12:00") };
     var cultureInfo = new System.Globalization.CultureInfo("pt-BR");
-    var disponibilidadeString = String.Join(",", Model.DisponibilidadeProfessorDias.Select(d => $"{(int)d.DisponibilidadeDia.DiaDaSemana}-{d.Horario.HoraInicio.Hours}-{d.Horario.HoraFim.Hours}"));
+    var disponibilidadeString = Model.DiasDisponiveis != null ?
+        String.Join(",", Model.DiasDisponiveis.SelectMany(d => d.HorariosDisponiveis.Select(h => $"{(int)d.DiaDaSemana}-{h.HoraInicio.Hours}:{h.HoraInicio.Minutes}-{h.HoraFim.Hours}:{h.HoraFim.Minutes}"))) :
+        "";
 }
 
 <form asp-controller="Disponibilidade" asp-action="CriarDispProfessor" method="post">
     <h4>Disponibilidade</h4>
-    <input type="hidden" asp-for="ProfessorId" />
+    <input type="hidden" asp-for="Id" />
     <input type="hidden" id="DisponibilidadeDiasInput" name="DisponibilidadeDiasInput" value="@disponibilidadeString" />
-
-
 
     <table class="table table-bordered">
         <thead>
@@ -33,9 +33,9 @@
                     @for (var i = 0; i < diasDaSemana.Length; i++)
                     {
                         <td>
-                            <input type="hidden" name="Disponibilidade.DisponibilidadeDias[@i].DiaDaSemana" value="@i" />
-                            <input type="hidden" name="Disponibilidade.DisponibilidadeDias[@i].HoraInicio" value="@horariosInicio[j].ToString(@"hh\:mm")" />
-                            <input type="hidden" name="Disponibilidade.DisponibilidadeDias[@i].HoraFim" value="@horariosFim[j].ToString(@"hh\:mm")" />
+                            <input type="hidden" name="DiaDaSemana[@i]" value="@i" />
+                            <input type="hidden" name="HoraInicio[@j]" value="@horariosInicio[j].ToString(@"hh\:mm")" />
+                            <input type="hidden" name="HoraFim[@j]" value="@horariosFim[j].ToString(@"hh\:mm")" />
                             <button class="btn btn-success btn-availability w-100"
                                     data-dia="@i"
                                     data-horario-inicio="@horariosInicio[j].ToString(@"hh\:mm")"

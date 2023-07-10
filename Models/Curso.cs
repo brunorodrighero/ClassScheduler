@@ -2,7 +2,7 @@
 
 namespace ClassScheduler.Models
 {
-    public class Curso
+    public class Curso : BaseEntity
     {
         [Key]
         public int Id { get; set; }
@@ -17,9 +17,5 @@ namespace ClassScheduler.Models
         public string? Descricao { get; set; }
 
         public virtual List<Disciplina>? Disciplinas { get; set; }
-
-        public DateTime DataCadastro { get; set; }
-
-        public DateTime? DataAtualizacao { get; set; }
     }
 }

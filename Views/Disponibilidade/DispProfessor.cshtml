@@ -1,16 +1,16 @@
-﻿@model DisponibilidadeProfessor
+﻿@model Professor
 
 @{
     ViewData["Title"] = "Selecione o Professor";
 }
 
-<form asp-controller="Disponibilidade" asp-action="CriarDispProfessor" method="post">
+<form asp-controller="Disponibilidade" asp-action="SelecionarProfessor" method="post">
     <div class="form-group mb-3">
-        <label for="ProfessorId" class="form-label">Professor</label>
-        <select asp-for="ProfessorId" asp-items="ViewBag.Professor" class="form-control">
+        <label for="Id" class="form-label">Professor</label>
+        <select asp-for="Id" asp-items="ViewBag.Professor" class="form-control">
             <option value="">Selecione o professor</option>
         </select>
-        <span asp-validation-for="ProfessorId" class="text-danger"></span>
+        <span asp-validation-for="Id" class="text-danger"></span>
     </div>
     <div class="row justify-content-center">
         <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">

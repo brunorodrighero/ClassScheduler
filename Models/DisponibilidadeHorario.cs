@@ -2,7 +2,7 @@
 
 namespace ClassScheduler.Models
 {
-    public class Horario
+    public class DisponibilidadeHorario : BaseEntity
     {
         [Key]
         public int Id { get; set; }
@@ -13,9 +13,7 @@ namespace ClassScheduler.Models
         [Required]
         public TimeSpan HoraFim { get; set; }
 
-        //[ForeignKey("DisponibilidadeDiaId")]
-        //public virtual DisponibilidadeDia DisponibilidadeDia { get; set; }
-        //public int DisponibilidadeDiaId { get; set; }
+        public virtual ICollection<DisponibilidadeDia>? DiasDisponiveis { get; set; }
     }
 }
 

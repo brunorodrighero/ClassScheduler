@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClassScheduler.Models
 {
-    public class Aula
+    public class Aula : BaseEntity
     {
         [Key]
         public int Id { get; set; }
@@ -25,9 +25,5 @@ namespace ClassScheduler.Models
         [ForeignKey("SalaId")]
         public virtual Sala Sala { get; set; }
         public int SalaId { get; set; }
-
-        public DateTime? DataCadastro { get; set; }
-
-        public DateTime? DataAtualizacao { get; set; }
     }
 }

@@ -1,14 +1,19 @@
-﻿@model DisponibilidadeProfessor
+﻿@model Professor
 @{
     ViewData["Title"] = "Editar Disponibilidade do Professor";
-    var diasDaSemana = new string[] { "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo" };
-    var horarios = new string[] { "07:30 - 08:20", "08:20 - 09:10", "09:10 - 10:00", "10:20 - 11:10", "11:10 - 12:00" };
+    var diasDaSemana = new DayOfWeek[] { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday };
+    var horariosInicio = new TimeSpan[] { TimeSpan.Parse("07:30"), TimeSpan.Parse("08:20"), TimeSpan.Parse("09:10"), TimeSpan.Parse("10:20"), TimeSpan.Parse("11:10") };
+    var horariosFim = new TimeSpan[] { TimeSpan.Parse("08:20"), TimeSpan.Parse("09:10"), TimeSpan.Parse("10:00"), TimeSpan.Parse("11:10"), TimeSpan.Parse("12:00") };
+    var cultureInfo = new System.Globalization.CultureInfo("pt-BR");
+    var disponibilidadeString = Model.DiasDisponiveis != null ?
+        String.Join(",", Model.DiasDisponiveis.SelectMany(d => d.HorariosDisponiveis.Select(h => $"{(int)d.DiaDaSemana}-{h.HoraInicio.Hours}:{h.HoraInicio.Minutes}-{h.HoraFim.Hours}:{h.HoraFim.Minutes}"))) :
+        "";
 }
 
 <form asp-controller="Disponibilidade" asp-action="EditarDispProfessor" method="post">
     <h4>Disponibilidade</h4>
-    <input type="hidden" asp-for="ProfessorId" /> <!-- Adicione o ProfessorId aqui -->
-    <input type="hidden" asp-for="DisponibilidadeProfessorDias" /> <!-- Adicione a disponibilidade aqui -->
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" id="DisponibilidadeDiasInput" name="DisponibilidadeDiasInput" value="@disponibilidadeString" />
 
     <table class="table table-bordered">
         <thead>
@@ -16,22 +21,25 @@
                 <th></th>
                 @foreach (var dia in diasDaSemana)
                 {
-                    <th>@dia</th>
+                    <th>@cultureInfo.DateTimeFormat.GetDayName(dia)</th>
                 }
             </tr>
         </thead>
         <tbody>
-            @foreach (var horario in horarios)
+            @for (var j = 0; j < horariosInicio.Length; j++)
             {
                 <tr>
-                    <td>@horario</td>
+                    <td>@horariosInicio[j].ToString(@"hh\:mm") - @horariosFim[j].ToString(@"hh\:mm")</td>
                     @for (var i = 0; i < diasDaSemana.Length; i++)
                     {
                         <td>
+                            <input type="hidden" name="DiaDaSemana[@i]" value="@i" />
+                            <input type="hidden" name="HoraInicio[@j]" value="@horariosInicio[j].ToString(@"hh\:mm")" />
+                            <input type="hidden" name="HoraFim[@j]" value="@horariosFim[j].ToString(@"hh\:mm")" />
                             <button class="btn btn-success btn-availability w-100"
-                                    onclick="toggleAvailability(this)"
                                     data-dia="@i"
-                                    data-horario="@horario">
+                                    data-horario-inicio="@horariosInicio[j].ToString(@"hh\:mm")"
+                                    data-horario-fim="@horariosFim[j].ToString(@"hh\:mm")">
                                 Disponível
                             </button>
                         </td>

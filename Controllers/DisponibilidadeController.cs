@@ -2,7 +2,6 @@
 using ClassScheduler.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace ClassScheduler.Controllers
 {
@@ -19,7 +18,7 @@ namespace ClassScheduler.Controllers
         {
             List<Professor> professores = _context.Professores.ToList();
             ViewBag.Professor = new SelectList(professores, "Id", "NomeCompleto");
-            return View(new DisponibilidadeProfessor());
+            return View(new Professor());
         }
 
         public IActionResult DispDisciplina()
@@ -32,6 +31,17 @@ namespace ClassScheduler.Controllers
             return View();
         }
 
+        public IActionResult SelecionarProfessor(int id)
+        {
+            var professor = _context.Professores.Find(id);
+            if (professor == null)
+            {
+                return NotFound();
+            }
+
+            return View("CriarDispProfessor", professor);
+        }
+
         public IActionResult CriarDispProfessor(int id)
         {
             var professor = _context.Professores.Find(id);
@@ -40,84 +50,53 @@ namespace ClassScheduler.Controllers
                 return NotFound();
             }
 
-            var dispProfessor = _context.DisponibilidadesProfessores
-                .Include(dp => dp.DisponibilidadeProfessorDias)
-                .ThenInclude(dpd => dpd.DisponibilidadeDia)
-                .ThenInclude(dd => dd.Horarios)
-                .FirstOrDefault(dp => dp.ProfessorId == id);
+            return View(professor);
 
-            if (dispProfessor == null)
-            {
-                dispProfessor = new DisponibilidadeProfessor
-                {
-                    Professor = professor
-                };
-            }
-
-            return View(dispProfessor);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CriarDispProfessor(int id, DisponibilidadeProfessor dispProfessor)
+        public IActionResult CriarDispProfessor(int id, string DisponibilidadeDiasInput)
         {
-            // Vincula os dias de disponibilidade
-            BindDiasDisponibilidade(dispProfessor);
-
-            if (ModelState.IsValid)
+            var professor = _context.Professores.Find(id);
+            if (professor == null)
             {
-                var existingDispProfessor = _context.DisponibilidadesProfessores
-                    .Include(dp => dp.DisponibilidadeProfessorDias)
-                    .ThenInclude(dpd => dpd.DisponibilidadeDia)
-                    .ThenInclude(dd => dd.Horarios)
-                    .FirstOrDefault(dp => dp.ProfessorId == id);
-
-                if (existingDispProfessor != null)
-                {
-                    // Remova os antigos
-                    _context.DisponibilidadesProfessoresDias.RemoveRange(existingDispProfessor.DisponibilidadeProfessorDias);
-
-                    // Adicione novos
-                    existingDispProfessor.DisponibilidadeProfessorDias = dispProfessor.DisponibilidadeProfessorDias;
-                    _context.DisponibilidadesProfessores.Update(existingDispProfessor);
-                }
-                else
-                {
-                    // Criar nova disponibilidade
-                    _context.Add(dispProfessor);
-                }
-
-                _context.SaveChanges();
-
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
 
-            return View(dispProfessor);
-        }
+            var disponibilidadeDiasInput = DisponibilidadeDiasInput ?? "";
+            var disponibilidades = disponibilidadeDiasInput.Split(",", StringSplitOptions.RemoveEmptyEntries);
 
-        private void BindDiasDisponibilidade(DisponibilidadeProfessor dispProfessor)
-        {
-            if (dispProfessor.DisponibilidadeDiasInput != null)
+            foreach (var disponibilidade in disponibilidades)
             {
-                var dias = dispProfessor.DisponibilidadeDiasInput.Split(',');
-                foreach (var dia in dias)
+                var parts = disponibilidade.Split("-").Select(p => p.Trim()).ToList();
+                var diaDaSemana = (DayOfWeek)int.Parse(parts[0]);
+                var horaInicio = TimeSpan.Parse(parts[1]);
+                var horaFim = TimeSpan.Parse(parts[2]);
+
+                // Busca por dia disponível existente ou cria um novo.
+                var diaDisponivel = professor.DiasDisponiveis?.FirstOrDefault(d => d.DiaDaSemana == diaDaSemana);
+                if (diaDisponivel == null)
                 {
-                    if (Enum.TryParse<DayOfWeek>(dia, out var diaDaSemana))
-                    {
-                        var dispDia = new DisponibilidadeDia { DiaDaSemana = diaDaSemana };
+                    diaDisponivel = new DisponibilidadeDia { DiaDaSemana = diaDaSemana };
+                    professor.DiasDisponiveis ??= new List<DisponibilidadeDia>();
+                    professor.DiasDisponiveis.Add(diaDisponivel);
+                }
 
-                        var dispProfDia = new DisponibilidadeProfessorDia
-                        {
-                            DisponibilidadeProfessor = dispProfessor,
-                            DisponibilidadeDia = dispDia
-                        };
-
-                        dispProfessor.DisponibilidadeProfessorDias.Add(dispProfDia);
-                    }
+                // Busca por horário disponível existente ou cria um novo.
+                var horarioDisponivel = diaDisponivel.HorariosDisponiveis?.FirstOrDefault(h => h.HoraInicio == horaInicio && h.HoraFim == horaFim);
+                if (horarioDisponivel == null)
+                {
+                    horarioDisponivel = new DisponibilidadeHorario { HoraInicio = horaInicio, HoraFim = horaFim };
+                    diaDisponivel.HorariosDisponiveis ??= new List<DisponibilidadeHorario>();
+                    diaDisponivel.HorariosDisponiveis.Add(horarioDisponivel);
                 }
             }
+
+            _context.Professores.Update(professor);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
         }
-
-
     }
 }
