@@ -51,7 +51,6 @@ namespace ClassScheduler.Controllers
             }
         }
 
-
         public IActionResult MostrarDispProfessor(int id)
         {
             var professor = _context.Professores
@@ -66,8 +65,6 @@ namespace ClassScheduler.Controllers
 
             return View(professor);
         }
-
-
 
         public IActionResult CriarDispProfessor(int id)
         {
