@@ -2,6 +2,7 @@
 using ClassScheduler.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClassScheduler.Controllers
 {
@@ -31,7 +32,7 @@ namespace ClassScheduler.Controllers
             return View();
         }
 
-        public IActionResult SelecionarProfessor(int id)
+        public IActionResult SelecionarProfessor(int id, string action)
         {
             var professor = _context.Professores.Find(id);
             if (professor == null)
@@ -39,8 +40,34 @@ namespace ClassScheduler.Controllers
                 return NotFound();
             }
 
-            return View("CriarDispProfessor", professor);
+            switch (action)
+            {
+                case "CriarDispProfessor":
+                    return RedirectToAction("CriarDispProfessor", new { id });
+                case "MostrarDispProfessor":
+                    return RedirectToAction("MostrarDispProfessor", new { id });
+                default:
+                    return View();
+            }
         }
+
+
+        public IActionResult MostrarDispProfessor(int id)
+        {
+            var professor = _context.Professores
+                                    .Include(p => p.DiasDisponiveis) // Carrega os dias disponíveis do professor.
+                                    .ThenInclude(d => d.HorariosDisponiveis) // Carrega os horários disponíveis de cada dia.
+                                    .FirstOrDefault(p => p.Id == id);
+
+            if (professor == null)
+            {
+                return NotFound();
+            }
+
+            return View(professor);
+        }
+
+
 
         public IActionResult CriarDispProfessor(int id)
         {
@@ -96,7 +123,7 @@ namespace ClassScheduler.Controllers
             _context.Professores.Update(professor);
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(DispProfessor));
         }
     }
 }

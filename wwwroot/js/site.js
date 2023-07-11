@@ -8,11 +8,18 @@
     });
 
     $('#Celular').mask('(00)00000-0000');
-    $('#Telefone').mask('(00)0000-0000');
+    $('#Telefone').mask('(00)0000-0000');    
 
-    var disponibilidadeDias = $('#DisponibilidadeDiasInput').val().split(',');
+    var disponibilidadeDiasInput = $('#DisponibilidadeDiasInput').val();
+    var disponibilidadeDias = disponibilidadeDiasInput ? disponibilidadeDiasInput.split(',') : [];
+
 
     $('.btn-availability').each(function () {
+
+        if ($(this).prop('disabled')) {
+            return;
+        }
+
         var dia = $(this).attr('data-dia');
         var horarioInicio = $(this).attr('data-horario-inicio');
         var horarioFim = $(this).attr('data-horario-fim');
@@ -32,6 +39,10 @@
 
     $('.btn-availability').click(function (event) {
         event.preventDefault();
+
+        if ($(this).prop('disabled')) {
+            return;
+        }
 
         var dia = $(this).attr('data-dia');
         var horarioInicio = $(this).attr('data-horario-inicio');
