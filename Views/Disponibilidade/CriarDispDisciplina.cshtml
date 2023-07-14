@@ -1,17 +1,16 @@
-﻿@model Professor
+﻿@model Disciplina
 @{
-    ViewData["Title"] = "Criar Disponibilidade do Professor";
+    ViewData["Title"] = "Criar Disponibilidade da Disciplina";
     var diasDaSemana = new DayOfWeek[] { DayOfWeek.Monday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Thursday, DayOfWeek.Friday, DayOfWeek.Saturday, DayOfWeek.Sunday };
     var horariosInicio = new TimeSpan[] { TimeSpan.Parse("07:30"), TimeSpan.Parse("08:20"), TimeSpan.Parse("09:10"), TimeSpan.Parse("10:20"), TimeSpan.Parse("11:10") };
     var horariosFim = new TimeSpan[] { TimeSpan.Parse("08:20"), TimeSpan.Parse("09:10"), TimeSpan.Parse("10:00"), TimeSpan.Parse("11:10"), TimeSpan.Parse("12:00") };
     var cultureInfo = new System.Globalization.CultureInfo("pt-BR");
-    var disponibilidadeString = Model.DiasDisponiveis != null ?
-        String.Join(",", Model.DiasDisponiveis.SelectMany(d => d.HorariosDisponiveis.Select(h => $"{(int)d.DiaDaSemana}-{h.HoraInicio.Hours}:{h.HoraInicio.Minutes}-{h.HoraFim.Hours}:{h.HoraFim.Minutes}"))) :
+    var disponibilidadeString = Model.DiasDisponiveis != null ? String.Join(",", Model.DiasDisponiveis.SelectMany(d => d.HorariosDisponiveis.Select(h => $"{(int)d.DiaDaSemana}-{h.HoraInicio.Hours}:{h.HoraInicio.Minutes}-{h.HoraFim.Hours}:{h.HoraFim.Minutes}"))) :
         "";
 }
 
-<form asp-controller="Disponibilidade" asp-action="CriarDispProfessor" method="post">
-    <h4>Disponibilidade @Model.NomeCompleto</h4>
+<form asp-controller="Disponibilidade" asp-action="CriarDispDisciplina" method="post">
+    <h4>Disponibilidade @Model.Nome</h4>
     <input type="hidden" asp-for="Id" />
     <input type="hidden" id="DisponibilidadeDiasInput" name="DisponibilidadeDiasInput" value="@disponibilidadeString" />
 
@@ -19,18 +18,20 @@
         <thead>
             <tr>
                 <th></th>
-                @foreach (var dia in diasDaSemana)
+@foreach (var dia in diasDaSemana)
                 {
                     <th>@cultureInfo.DateTimeFormat.GetDayName(dia)</th>
                 }
             </tr>
         </thead>
         <tbody>
-            @for (var j = 0; j < horariosInicio.Length; j++)
+            @for(var j = 0; j<horariosInicio.Length; j++)
             {
                 <tr>
-                    <td>@horariosInicio[j].ToString(@"hh\:mm") - @horariosFim[j].ToString(@"hh\:mm")</td>
-                    @for (var i = 0; i < diasDaSemana.Length; i++)
+                    <td>
+@horariosInicio[j].ToString(@"hh\:mm") - @horariosFim[j].ToString(@"hh\:mm")
+                    </td>
+                    @foreach (var i in diasDaSemana)
                     {
                         <td>
                             <input type="hidden" name="DiaDaSemana[@i]" value="@i" />
@@ -48,6 +49,4 @@
             }
         </tbody>
     </table>
-
-    <button type="submit" class="btn btn-primary">Salvar</button>
 </form>

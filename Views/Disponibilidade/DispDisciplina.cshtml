@@ -1,5 +1,30 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Disciplina
+
 @{
+    ViewData["Title"] = "Selecione a Disciplina";
 }
+
+<form asp-controller="Disponibilidade" asp-action="SelecionarDisciplina" method="post">
+    <div>
+<label for="Id" class="form-label">Disciplina</label>
+        <select asp-for="Id" asp-items="ViewBag.Disciplina" class="form-control">
+            <option value="">Selecione a disciplina</option>
+        </select>
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
+            <a class="btn btn-secondary w-100" role="button" asp-controller="Home" asp-action="Index">
+                <i class="bi bi-skip-backward"></i> Voltar
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 d-flex justify-content-center">
+<button type="submit" name="action" value="CriarDispDisciplina" class="btn btn-primary w-100">
+                <i class="bi bi-check2"></i> Criar
+            </button>
+            <button type="submit" name="action" value="MostrarDispDisciplina" class="btn btn-primary w-100">
+                <i class="bi bi-check2"></i> Mostrar
+            </button>
+        </div>
+    </div>
+</form>

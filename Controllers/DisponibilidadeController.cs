@@ -24,7 +24,9 @@ namespace ClassScheduler.Controllers
 
         public IActionResult DispDisciplina()
         {
-            return View();
+            List<Disciplina> disciplinas = _context.Disciplinas.ToList();
+            ViewBag.Disciplina = new SelectList(disciplinas, "Id", "Nome");
+            return View(new Disciplina());
         }
 
         public IActionResult DispAula()
@@ -121,6 +123,90 @@ namespace ClassScheduler.Controllers
             _context.SaveChanges();
 
             return RedirectToAction(nameof(DispProfessor));
+        }
+
+        public IActionResult SelecionarDisciplina(int id, string action)
+        {
+            var disciplina = _context.Disciplinas.Find(id);
+            if (disciplina == null)
+            {
+                return NotFound();
+            }
+            switch (action)
+            {
+                case "CriarDispDisciplina":
+                    return RedirectToAction("CriarDispDisciplina", new { id });
+                case "MostrarDispDisciplina":
+                    return RedirectToAction("MostrarDispDisciplina", new { id });
+                default:
+                    return View();
+            }
+        }
+
+        public IActionResult CriarDispDisciplina(int id)
+        {
+            var disciplina = _context.Disciplinas.Find(id);
+            if (disciplina == null)
+            {
+                return NotFound();
+            }
+
+            return View(disciplina);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CriarDispDisciplina(int id, string DisponibilidadeDiasInput)
+        {
+            var disciplina = _context.Disciplinas.Find(id);
+            if (disciplina == null)
+            {
+                return NotFound();
+            }
+            var disponibilidadeDiasInput = DisponibilidadeDiasInput ?? "";
+            var disponibilidades = disponibilidadeDiasInput.Split(",", StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var disponibilidade in disponibilidades)
+            {
+                var parts = disponibilidade.Split("-").Select(p => p.Trim()).ToList();
+                var diaDaSemana = (DayOfWeek)int.Parse(parts[0]);
+                var horaInicio = TimeSpan.Parse(parts[1]);
+                var horaFim = TimeSpan.Parse(parts[2]);
+
+                // Busca por dia disponível existente ou cria um novo.
+                var diaDisponivel = disciplina.DiasDisponiveis?.FirstOrDefault(d => d.DiaDaSemana == diaDaSemana);
+                if (diaDisponivel == null)
+                {
+                    diaDisponivel = new DisponibilidadeDia { DiaDaSemana = diaDaSemana };
+                    disciplina.DiasDisponiveis ??= new List<DisponibilidadeDia>();
+                    disciplina.DiasDisponiveis.Add(diaDisponivel);
+                }
+                //se diaDisponivel não for nulo, deletar a entrada do dia disponível que está no banco de dados
+                else
+                {
+                    _context.DisponibilidadesDias.Remove(diaDisponivel);
+                }
+
+                //Busca por horário disponível existente ou cria um novo.
+                var horarioDisponivel = diaDisponivel.HorariosDisponiveis?.FirstOrDefault(h => h.HoraInicio == horaInicio && h.HoraFim == horaFim);
+                if (horarioDisponivel == null)
+                {
+                    horarioDisponivel = new DisponibilidadeHorario { HoraInicio = horaInicio, HoraFim = horaFim };
+                    diaDisponivel.HorariosDisponiveis ??= new List<DisponibilidadeHorario>();
+                    diaDisponivel.HorariosDisponiveis.Add(horarioDisponivel);
+                }
+
+                //se horarioDisponivel não for nulo, deletar a entrada do horário disponível que está no banco de dados
+                else
+                {
+                    _context.DisponibilidadesHorarios.Remove(horarioDisponivel);
+                }
+
+                _context.Disciplinas.Update(disciplina);
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(DispDisciplina));
+            }
         }
     }
 }
